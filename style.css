@@ -1,0 +1,28 @@
+body{
+    background-color: #D3D3D3;
+}
+#calc-body{
+    /* border: 1px solid red; */
+    height: 90vh;
+    width: 595px;
+    margin: auto;
+    margin-top: 2%;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+
+
+    /* Shadows */
+    box-shadow:  11px 11px 22px #bebebe,
+             -11px -11px 22px #e8e8e8;
+}
+#display{
+    height: 179px;
+    width: 90%;
+    border-radius: 25px;
+
+    box-shadow: inset 11px 11px 22px #bebebe,
+            inset -11px -11px 22px #e8e8e8;
+}

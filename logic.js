@@ -28,3 +28,19 @@ function divide(arr){
     return total;
 }
 // MATH OPERATOR FUNCTIONS
+
+// Main Operator Function that calls every other operator
+function operate(opr, arr){
+    switch(opr){
+        case '+':
+            return addition(arr);
+        case "-":
+            return subtract(arr);
+        case "*":
+            return multiply(arr);
+        case "/":
+            return divide(arr);
+        default:
+            return "Sorry no cases found";
+    }
+}

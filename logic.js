@@ -3,10 +3,14 @@ const allClear = document.querySelector("#all-clear");
 const processing = document.querySelector("#processing");
 const answer = document.querySelector("#answer");
 const delBtn = document.querySelector("#delete");
+const functKeys = document.querySelectorAll(".funct");
+
 
 
 
 let numArr = [];  //numArr for using it later in processing the strings
+
+
 // MATH OPERATOR FUNCTIONS
 function addition(arr){
     let total = arr.reduce(function (prev, curr){
@@ -74,7 +78,34 @@ function del(){
     processing.textContent = numArr.join('');
 }
 
+// Add Symbols to display
+function symbAdd(){
+    let symbol = this.getAttribute("data-function")
+    let toAdd;
+    switch(symbol){
+        case "mod":
+            toAdd = "%";
+            break;
+        case "add":
+            toAdd =  "+";
+            break;
+        case "sub":
+            toAdd = "−";
+            break;
+        case "multiply":
+            toAdd = "×";
+            break;
+        case "divide":
+            toAdd = "÷";
+            break;
+
+    }
+    numArr.push(toAdd);
+    processing.textContent = numArr.join('');
+}
+
 
 nums.forEach(ele => ele.addEventListener("click", populate));
 allClear.addEventListener("click", clear);
 delBtn.addEventListener("click", del);
+functKeys.forEach(ele=>ele.addEventListener("click", symbAdd));

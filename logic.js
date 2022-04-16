@@ -4,11 +4,11 @@ const processing = document.querySelector("#processing");
 const answer = document.querySelector("#answer");
 const delBtn = document.querySelector("#delete");
 const functKeys = document.querySelectorAll(".funct");
-
-
+const specialChar = /[`!@#$%^&*()_+−×÷\-=\[\]{};':"\\|,.<>\/?~]/;  //Regex used to seperate numbers and store them in list;
 
 
 let numArr = [];  //numArr for using it later in processing the strings
+let operTorf = false; //Used to prevent insertion of operators more than one times in a row
 
 
 // MATH OPERATOR FUNCTIONS
@@ -61,6 +61,9 @@ function operate(opr, arr){
 
 // Display populator
 function populate(){
+    if(!operTorf){
+        operTorf = true;
+    }
     numArr.push(this.textContent);
     processing.textContent = numArr.join('');
 }
@@ -80,6 +83,9 @@ function del(){
 
 // Add Symbols to display
 function symbAdd(){
+    if(!operTorf){
+        return;
+    }
     let symbol = this.getAttribute("data-function")
     let toAdd;
     switch(symbol){
@@ -102,6 +108,7 @@ function symbAdd(){
     }
     numArr.push(toAdd);
     processing.textContent = numArr.join('');
+    operTorf = false;
 }
 
 

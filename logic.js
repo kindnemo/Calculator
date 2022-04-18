@@ -1,41 +1,45 @@
 const nums = document.querySelectorAll(".num");
 const allClear = document.querySelector("#all-clear");
 const processing = document.querySelector("#processing");
-const answer = document.querySelector("#answer");
+const answerDisplay = document.querySelector("#answer");
+const answerKey = document.querySelector("#answerKey");
 const delBtn = document.querySelector("#delete");
 const functKeys = document.querySelectorAll(".funct");
-const specialChar = /[`!@#$%^&*()_+−×÷\-=\[\]{};':"\\|,.<>\/?~]/;  //Regex used to seperate numbers and store them in list;
+
+
+const specialChar = /[`!@#$%^&*()_+−×÷\-=\[\]{};':"\\|,<>\/?~]/;  //Regex used to seperate numbers and store them in list;
 
 
 let numArr = [];  //numArr for using it later in processing the strings
+let oprArr = []; //oprArr for using the operation to be performed on the numbers
 let operTorf = false; //Used to prevent insertion of operators more than one times in a row
 
 
 // MATH OPERATOR FUNCTIONS
 function addition(arr){
     let total = arr.reduce(function (prev, curr){
-        return prev + curr;
+        return parseFloat(prev) + parseFloat(curr);
     });
     return total;
 }
 
 function subtract(arr){
     let total = arr.reduce(function (prev, curr){
-        return prev - curr;
+        return parseFloat(prev) - parseFloat(curr);
     });
 
     return total;
 }
 function multiply(arr){
     let total = arr.reduce(function (prev, curr){
-        return prev*curr;
+        return parseFloat(prev) * parseFloat(curr);
     });
 
     return total;
 }
 function divide(arr){
     let total = arr.reduce(function (prev, curr){
-        return prev/curr;
+        return parseFloat(prev) / parseFloat(curr);
     });
 
     return total;
@@ -45,13 +49,13 @@ function divide(arr){
 // Main Operator Function that calls every other operator
 function operate(opr, arr){
     switch(opr){
-        case '+':
+        case 'add':
             return addition(arr);
-        case "-":
+        case "sub":
             return subtract(arr);
-        case "*":
+        case "multiply":
             return multiply(arr);
-        case "/":
+        case "divide":
             return divide(arr);
         default:
             return "Sorry no cases found";
@@ -71,7 +75,7 @@ function populate(){
 // Clearing the display
 function clear(){
     processing.textContent = "";
-    answer.textContent = "";
+    answerDisplay.textContent = "";
     numArr = [];
 }
 
@@ -107,8 +111,19 @@ function symbAdd(){
 
     }
     numArr.push(toAdd);
+    oprArr.push(symbol);
     processing.textContent = numArr.join('');
     operTorf = false;
+}
+
+
+// Answering Function
+function answer(){
+    finalArr = numArr.join("").split(specialChar);
+    oprArr.map(ele => {
+        answerDisplay.textContent =  operate(ele, finalArr);
+    })
+    
 }
 
 
@@ -116,3 +131,4 @@ nums.forEach(ele => ele.addEventListener("click", populate));
 allClear.addEventListener("click", clear);
 delBtn.addEventListener("click", del);
 functKeys.forEach(ele=>ele.addEventListener("click", symbAdd));
+answerKey.addEventListener("click", answer);

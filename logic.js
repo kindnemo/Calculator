@@ -49,14 +49,14 @@ function divide(arr){
 // Main Operator Function that calls every other operator
 function operate(opr, arr){
     switch(opr){
+        case "divide":
+            return divide(arr);
+        case "multiply":
+            return multiply(arr);
         case 'add':
             return addition(arr);
         case "sub":
             return subtract(arr);
-        case "multiply":
-            return multiply(arr);
-        case "divide":
-            return divide(arr);
         default:
             return "Sorry no cases found";
     }
@@ -77,6 +77,7 @@ function clear(){
     processing.textContent = "";
     answerDisplay.textContent = "";
     numArr = [];
+    oprArr = [];
 }
 
 // Delete button function 
@@ -120,9 +121,15 @@ function symbAdd(){
 // Answering Function
 function answer(){
     finalArr = numArr.join("").split(specialChar);
-    oprArr.map(ele => {
-        answerDisplay.textContent =  operate(ele, finalArr);
-    })
+    // oprArr.map(ele => {
+    //     answerDisplay.textContent =  operate(ele, finalArr);   //BUG FOUND
+    // })
+    let finalAnswer;
+    
+    finalAnswer = operate(oprArr[0], finalArr);
+    
+    finalArr.splice(0,2);
+    finalArr.unshift(finalAnswer);
     
 }
 

@@ -11,8 +11,11 @@ const specialChar = /[`!@#$%^&*()_+−×÷\-=\[\]{};':"\\|,<>\/?~]/;  //Regex us
 
 
 let numArr = [];  //numArr for using it later in processing the strings
+let secArr = [];
 let oprArr = []; //oprArr for using the operation to be performed on the numbers
 let operTorf = false; //Used to prevent insertion of operators more than one times in a row
+let trigAns = false; //Using this to trigger the answer function only when 
+let oprArrIndex = 0; //Using this to increment the oprArr 
 
 
 // MATH OPERATOR FUNCTIONS
@@ -70,6 +73,11 @@ function populate(){
     }
     numArr.push(this.textContent);
     processing.textContent = numArr.join('');
+
+    if(trigAns){
+        answer();
+    }
+
 }
 
 // Clearing the display
@@ -115,22 +123,30 @@ function symbAdd(){
     oprArr.push(symbol);
     processing.textContent = numArr.join('');
     operTorf = false;
+    trigAns = true;
 }
 
 
 // Answering Function
 function answer(){
+    let finalArr = [];
     finalArr = numArr.join("").split(specialChar);
-    // oprArr.map(ele => {
-    //     answerDisplay.textContent =  operate(ele, finalArr);   //BUG FOUND
-    // })
+    console.log(finalArr);
+    if(secArr.length <= 0){
+        secArr.unshift(finalArr[0]);
+    }
+    let answerArr = [secArr[0], finalArr[finalArr.length-1]]
     let finalAnswer;
     
-    finalAnswer = operate(oprArr[0], finalArr);
+    finalAnswer = operate(oprArr[oprArr.length - 1], answerArr);
+    if(!operTorf){
+        secArr = [finalAnswer];
+    }
     
-    finalArr.splice(0,2);
+    // finalArr.splice(0,2);
     finalArr.unshift(finalAnswer);
-    
+    // console.log(oprArr);
+    answerDisplay.textContent = finalArr[0];
 }
 
 

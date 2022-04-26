@@ -11,7 +11,8 @@ const specialChar = /[`!@#$%^&*()_+−×÷\-=\[\]{};':"\\|,<>\/?~]/;  //Regex us
 
 
 let numArr = [];  //numArr for using it later in processing the strings
-let secArr = [];
+let secArr = [];  //Stores the answer of two pairs of numbers
+let totalArr = [];
 let oprArr = []; //oprArr for using the operation to be performed on the numbers
 let operTorf = false; //Used to prevent insertion of operators more than one times in a row
 let trigAns = false; //Using this to trigger the answer function only when 
@@ -91,6 +92,7 @@ function clear(){
 // Delete button function 
 function del(){
     numArr.pop();
+    answer();
     processing.textContent = numArr.join('');
 }
 
@@ -122,6 +124,12 @@ function symbAdd(){
     numArr.push(toAdd);
     oprArr.push(symbol);
     processing.textContent = numArr.join('');
+
+    if(oprArr.length>1){
+        secArr = [totalArr[totalArr.length -1]];
+    }    //Sets the sec arr to whatever the answer of the first pair of number is when an operator is pressed again
+
+
     operTorf = false;
     trigAns = true;
 }
@@ -131,7 +139,7 @@ function symbAdd(){
 function answer(){
     let finalArr = [];
     finalArr = numArr.join("").split(specialChar);
-    console.log(finalArr);
+    // console.log(finalArr);
     if(secArr.length <= 0){
         secArr.unshift(finalArr[0]);
     }
@@ -139,7 +147,9 @@ function answer(){
     let finalAnswer;
     
     finalAnswer = operate(oprArr[oprArr.length - 1], answerArr);
-    if(!operTorf){
+    totalArr.push(finalAnswer);
+    console.log(totalArr);
+    if(!operTorf && finalArr.length > 1){
         secArr = [finalAnswer];
     }
     
@@ -154,4 +164,4 @@ nums.forEach(ele => ele.addEventListener("click", populate));
 allClear.addEventListener("click", clear);
 delBtn.addEventListener("click", del);
 functKeys.forEach(ele=>ele.addEventListener("click", symbAdd));
-answerKey.addEventListener("click", answer);
+// answerKey.addEventListener("click", answer);

@@ -166,7 +166,15 @@ function answer(){
 }
 
 
+// Equals function that displays the final result on pressing the equal button
+function equally(){
+    processing.textContent = answerDisplay.textContent;
+    numArr = [answerDisplay.textContent];
+    answerDisplay.textContent=""
+}
+
 nums.forEach(ele => ele.addEventListener("click", populate));
 allClear.addEventListener("click", clear);
 delBtn.addEventListener("click", del);
 functKeys.forEach(ele=>ele.addEventListener("click", symbAdd));
+answerKey.addEventListener("click", equally);

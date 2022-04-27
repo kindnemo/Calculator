@@ -61,20 +61,26 @@ function operate(opr, arr){
             return addition(arr);
         case "sub":
             return subtract(arr);
-        default:
-            return "Sorry no cases found";
     }
 }
 
 
 // Display populator
 function populate(){
+    if(numArr.length == 0 && this.textContent == "0"){
+        return;
+    }
+    if(this.textContent =="." && !operTorf){
+        numArr.push("0.")
+    }else{
+        numArr.push(this.textContent);
+    }
+    
+    processing.textContent = numArr.join('');
+    
     if(!operTorf){
         operTorf = true;
     }
-    numArr.push(this.textContent);
-    processing.textContent = numArr.join('');
-
     if(trigAns){
         answer();
     }
@@ -83,10 +89,14 @@ function populate(){
 
 // Clearing the display
 function clear(){
-    processing.textContent = "";
-    answerDisplay.textContent = "";
+    processing.textContent = "0";
     numArr = [];
     oprArr = [];
+    secArr = []; 
+    totalArr = [];
+    operTorf = false; 
+    trigAns = false; 
+    oprArrIndex = 0;
 }
 
 // Delete button function 
@@ -139,7 +149,6 @@ function symbAdd(){
 function answer(){
     let finalArr = [];
     finalArr = numArr.join("").split(specialChar);
-    // console.log(finalArr);
     if(secArr.length <= 0){
         secArr.unshift(finalArr[0]);
     }
@@ -148,14 +157,11 @@ function answer(){
     
     finalAnswer = operate(oprArr[oprArr.length - 1], answerArr);
     totalArr.push(finalAnswer);
-    console.log(totalArr);
     if(!operTorf && finalArr.length > 1){
         secArr = [finalAnswer];
     }
     
-    // finalArr.splice(0,2);
     finalArr.unshift(finalAnswer);
-    // console.log(oprArr);
     answerDisplay.textContent = finalArr[0];
 }
 
@@ -164,4 +170,3 @@ nums.forEach(ele => ele.addEventListener("click", populate));
 allClear.addEventListener("click", clear);
 delBtn.addEventListener("click", del);
 functKeys.forEach(ele=>ele.addEventListener("click", symbAdd));
-// answerKey.addEventListener("click", answer);

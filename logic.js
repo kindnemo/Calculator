@@ -90,6 +90,7 @@ function populate(){
 // Clearing the display
 function clear(){
     processing.textContent = "0";
+    answerDisplay.textContent = '';
     numArr = [];
     oprArr = [];
     secArr = []; 
@@ -170,7 +171,8 @@ function answer(){
 function equally(){
     processing.textContent = answerDisplay.textContent;
     numArr = [answerDisplay.textContent];
-    answerDisplay.textContent=""
+    answerDisplay.textContent="";
+    // processing.textContent="";
 }
 
 nums.forEach(ele => ele.addEventListener("click", populate));
